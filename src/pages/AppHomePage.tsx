@@ -1,36 +1,19 @@
 import { Link } from 'react-router-dom'
-import { Button, Card, Container, Logo, Text } from '@/shared/ui'
+import { Button, Card, Container, Text } from '@/shared/ui'
 import { strings } from '@/shared/config/strings/en'
 import { ROUTES } from '@/shared/config/constants'
 import { useCurrentUser } from '@/entities/user'
 import { useTodayMoodLog, useMoodStreak } from '@/features/dailyCheckIn'
-import { useLogout } from '@/features/auth/api/useLogout'
+import { AppHeader } from '@/widgets/AppHeader'
 
 export function AppHomePage() {
   const { data: user } = useCurrentUser()
   const { data: todayLog, isLoading: isTodayLoading } = useTodayMoodLog()
   const { data: streak } = useMoodStreak()
-  const logout = useLogout()
 
   return (
     <div className="min-h-svh bg-background">
-      <header className="border-b border-border">
-        <Container className="flex h-20 items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <Logo size={32} />
-            <Text variant="header" as="span">
-              {strings.brand.name}
-            </Text>
-          </div>
-          <button
-            type="button"
-            onClick={() => logout()}
-            className="text-sm font-semibold text-muted hover:text-ink"
-          >
-            {strings.home.signOut}
-          </button>
-        </Container>
-      </header>
+      <AppHeader />
 
       <Container className="flex flex-col gap-6 py-10">
         <Text variant="display" className="text-3xl">

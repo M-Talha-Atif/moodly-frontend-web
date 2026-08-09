@@ -84,29 +84,46 @@ logic; the token-attachment and refresh-on-401 interceptors are wired in
 
 Built so far: app shell (router, providers, theme), shared UI kit, the
 session/auth entity, a `ProtectedRoute` wrapper for authenticated-only pages,
-and five modules end to end: **Landing**, **Auth** (login/signup with role
-selection), **Onboarding** (chat-style step flow), **App Home** (greeting,
-mood streak, check-in prompt, sign out), **Daily Check-in** (mood wheel plus
-optional note, wired to `/mood-log`). All five were smoke-tested against a
-real local instance of `Backend/ai-moodler-backend`, not just built and
-assumed to work.
+a shared `AppHeader` widget (Home/Explore nav plus sign out) for all
+authenticated pages, and seven modules end to end: **Landing**, **Auth**
+(login/signup with role selection), **Onboarding** (chat-style step flow),
+**App Home** (greeting, mood streak, check-in prompt), **Daily Check-in**
+(mood wheel plus optional note, wired to `/mood-log`), **Explore** (search
+plus infinite-scroll "load more" list of experiences), **Experience Detail
+and Booking** (full experience view with emotion/outcome/cultural chips,
+host card, `POST /user/bookings`). All seven were smoke-tested against a real
+local instance of `Backend/ai-moodler-backend`, not just built and assumed to
+work.
 
 Not yet ported from the old frontend (`Frontend/ai-event-book`), intentionally
-out of scope for this pass: explore/bookings/community/profile, host
+out of scope for this pass: bookings list/community/profile, host
 dashboard/experiences/bookings, notifications, insights, settings. When
 picking these up, follow the same layer structure: a `features/<name>` folder
 with `api/model/ui`, theme tokens from `shared/ui`/`theme.css` only, copy in
 `shared/config/strings`.
 
-**Known backend caveat found during testing**: `POST /mood-log` originally
-required a photo or voice file on every submission even though the DTO marks
-both optional, and any thrown validation error was being rewrapped into a
-generic 500 by `MoodLogService.createForUser`'s catch block. Both were fixed
-directly in `Backend/ai-moodler-backend/src/mood-log/services/mood-log.service.ts`
-while testing this module (HttpExceptions now propagate instead of being
-swallowed, and a mood log with just a `moodLabel` is accepted). That backend
-fix has not been committed, review it in the backend repo before relying on it
-elsewhere.
+**Known backend caveats found during testing** (none committed to the backend
+repo, review before relying on them elsewhere):
+- `POST /mood-log` originally required a photo or voice file on every
+  submission even though the DTO marks both optional, and any thrown
+  validation error was being rewrapped into a generic 500 by
+  `MoodLogService.createForUser`'s catch block. Both were fixed directly in
+  `Backend/ai-moodler-backend/src/mood-log/services/mood-log.service.ts`
+  (HttpExceptions now propagate instead of being swallowed, and a mood log
+  with just a `moodLabel` is accepted).
+- `GET /user/experiences` only returns `id`/`title`/`price`/`image` per item
+  today, even though `ExperienceListItemDto` declares host/location/mood-tags/
+  spots/booking-state too (`ExperienceService.findAllForUser` selects a
+  narrower field set than `findAllPublic` does). `entities/experience`'s
+  `ExperienceListItem` type marks those extra fields optional so the UI
+  degrades gracefully rather than assuming data that isn't there; the
+  `ExperienceCard` only conditionally renders a subtitle when a mood tag is
+  actually present.
+- `GET /user/experiences/:id` returns `emotions`/`outcomes` at runtime, not
+  the `targetEmotions`/`desiredOutcomes` names its own `ExperienceResponseDto`
+  class declares (`ExperienceService.findOneWithBooking` hand-builds the
+  response object and doesn't match the DTO's field names). The frontend type
+  is built off the verified runtime shape, not the DTO class.
 
 The old frontend's mood-reactive theme switching (`.happy/.sad/.angry/.neutral`)
 was deliberately not carried over here, since the mobile app (the source of

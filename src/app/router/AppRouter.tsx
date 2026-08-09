@@ -19,6 +19,12 @@ const AppHomePage = lazy(() =>
 const DailyCheckInPage = lazy(() =>
   import('@/pages/DailyCheckInPage').then((m) => ({ default: m.DailyCheckInPage })),
 )
+const ExplorePage = lazy(() =>
+  import('@/pages/ExplorePage').then((m) => ({ default: m.ExplorePage })),
+)
+const ExperienceDetailPage = lazy(() =>
+  import('@/pages/ExperienceDetailPage').then((m) => ({ default: m.ExperienceDetailPage })),
+)
 
 export function AppRouter() {
   return (
@@ -49,6 +55,22 @@ export function AppRouter() {
             element={
               <ProtectedRoute>
                 <DailyCheckInPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.explore}
+            element={
+              <ProtectedRoute>
+                <ExplorePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.experienceDetail}
+            element={
+              <ProtectedRoute>
+                <ExperienceDetailPage />
               </ProtectedRoute>
             }
           />

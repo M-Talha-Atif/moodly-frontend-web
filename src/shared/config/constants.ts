@@ -5,7 +5,13 @@ export const ROUTES = {
   onboarding: '/onboarding',
   app: '/app',
   dailyCheckIn: '/daily-check-in',
+  explore: '/explore',
+  experienceDetail: '/experience/:id',
 } as const
+
+export function experienceDetailPath(id: string) {
+  return `/experience/${id}`
+}
 
 export const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3002/v1'
