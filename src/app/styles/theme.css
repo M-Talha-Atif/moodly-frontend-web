@@ -1,0 +1,71 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/nunito';
+
+/*
+ * Design tokens mirrored 1:1 from the mobile app (Mobile App/moodler/theme.md
+ * and components/ui/text.tsx). This file is the single source of truth for
+ * color, radius and spacing on the web - components should never hardcode
+ * hex values, they should use these Tailwind tokens.
+ */
+@theme {
+  --font-sans: 'Nunito Variable', 'Nunito', system-ui, -apple-system, sans-serif;
+
+  --color-background: #fafaf8;
+  --color-surface: #ffffff;
+
+  --color-ink: #030303;
+  --color-body: #1f2937;
+  --color-muted: #6b7280;
+  --color-input-text: #111827;
+  --color-placeholder: #9ca3af;
+  --color-disabled: #9ca3af;
+
+  --color-border: #e5e7eb;
+
+  --color-accent: #7bf163;
+  --color-accent-pressed: #6bd953;
+
+  --color-role-user: #10b981;
+  --color-role-user-bg: #ecfdf5;
+  --color-role-host: #3b82f6;
+  --color-role-host-bg: #eff6ff;
+
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fca5a5;
+  --color-error-text: #b91c1c;
+
+  --color-button-bg: #030303;
+  --color-button-text: #efefe7;
+
+  --color-icon-indigo-bg: #eef2ff;
+  --color-icon-amber-bg: #fef3c7;
+
+  --radius-button: 9px;
+  --radius-card: 12px;
+  --radius-feature: 16px;
+
+  --shadow-soft: 0 4px 12px rgba(3, 3, 3, 0.06);
+  --shadow-card: 0 6px 16px rgba(3, 3, 3, 0.08);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background: var(--color-background);
+    color: var(--color-body);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100svh;
+  }
+}

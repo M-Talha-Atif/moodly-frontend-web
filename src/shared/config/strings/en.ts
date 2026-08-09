@@ -1,0 +1,100 @@
+/*
+ * All user-facing copy lives here instead of inline in components. This is
+ * the seam a future i18n layer would plug into: swap this module for a
+ * locale-aware lookup without touching any component.
+ */
+export const strings = {
+  brand: {
+    name: 'Moodly',
+    tagline: 'Match your mood to meaningful experiences',
+  },
+  landing: {
+    heroEyebrow: 'Emotional wellbeing, matched to real life',
+    heroTitle: 'Where emotions meet experiences',
+    heroSubtitle:
+      'Moodly reads how you feel today and connects you with experiences, hosts and communities built for that exact moment.',
+    ctaPrimary: 'Get started',
+    ctaSecondary: 'I already have an account',
+    forYouTitle: 'For You',
+    forYouDescription:
+      'Share how you are feeling and discover experiences perfectly matched to your emotional needs.',
+    forHostsTitle: 'For Hosts',
+    forHostsDescription:
+      'Create and host transformative experiences that connect with people exactly when they need them.',
+    howItWorksEyebrow: 'How it works',
+    howItWorksTitle: 'Three steps to a better fit',
+    step1Title: 'Log your mood',
+    step1Description:
+      'A quick daily check-in tells Moodly how you are really feeling, not just what you searched for.',
+    step2Title: 'Get matched',
+    step2Description:
+      'Our recommendations adapt to your mood, goals and interests, not a generic list of events.',
+    step3Title: 'Show up, feel better',
+    step3Description:
+      'Book an experience, meet your host, and reflect afterward to keep your matches improving.',
+    footerTagline: 'Where emotions meet experiences.',
+  },
+  auth: {
+    loginTitle: 'Moodly',
+    loginSubtitle: 'Login to your account',
+    signupTitle: 'Moodly',
+    signupSubtitle: 'Create your account',
+    roleLabel: 'Choose your role',
+    roleUserTitle: 'User',
+    roleUserDescription: 'Find experiences matched to your mood',
+    roleHostTitle: 'Host',
+    roleHostDescription: 'Create experiences for others',
+    fullNameLabel: 'Full name',
+    fullNamePlaceholder: 'Your full name',
+    emailLabel: 'Email address',
+    emailPlaceholder: 'you@example.com',
+    passwordLabel: 'Password',
+    passwordPlaceholder: 'Enter your password',
+    passwordHint: 'Must be at least 8 characters',
+    confirmPasswordLabel: 'Confirm password',
+    confirmPasswordPlaceholder: 'Re-enter your password',
+    submitLogin: 'Sign In',
+    submitLoginLoading: 'Signing In...',
+    submitSignupUser: 'Sign Up as User',
+    submitSignupHost: 'Sign Up as Host',
+    submitSignupLoading: 'Creating Account...',
+    noAccount: 'New to Moodly?',
+    noAccountLink: 'Sign up',
+    hasAccount: 'Already have an account?',
+    hasAccountLink: 'Sign in',
+    genericError: 'Something went wrong. Please try again.',
+  },
+  onboarding: {
+    loading: 'Loading your onboarding...',
+    buildingTitle: 'Building your profile...',
+    buildingSubtitle: 'We are creating a space that feels just right for you.',
+    next: 'Next',
+    finish: 'Finish',
+    error: 'Something went wrong. Please try again.',
+    sessionExpired: 'Please login first',
+  },
+  dailyCheckIn: {
+    loading: 'Loading...',
+    title: 'How are you feeling today?',
+    subtitle:
+      'A quick daily check-in helps Moodly match you with the right experiences.',
+    moodWheelHeading: 'Select your current mood',
+    noteLabel: 'Add a note (optional)',
+    notePlaceholder: 'What is on your mind?',
+    submit: 'Save check-in',
+    alreadyLoggedTitle: 'You already checked in today',
+    alreadyLoggedMood: 'Logged mood',
+    goToHome: 'Go to Home',
+    error: 'Something went wrong. Please try again.',
+  },
+  home: {
+    greeting: 'Welcome back',
+    streakLabel: 'Day streak',
+    checkInPromptTitle: 'You have not checked in today',
+    checkInPromptDescription:
+      'Log your mood to get matched with experiences for how you feel right now.',
+    checkInCta: 'Log your mood',
+    checkedInTitle: 'You are checked in for today',
+    signOut: 'Sign out',
+  },
+} as const
