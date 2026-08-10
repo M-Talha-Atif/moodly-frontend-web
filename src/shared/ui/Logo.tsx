@@ -6,30 +6,20 @@ interface LogoProps {
 }
 
 /*
- * Lightweight recreation of the mobile app's mark. The source
- * (Mobile App/moodler/assets/images/logo.svg) embeds a large raster image
- * and is too heavy to ship on the web, so this is a vector-only equivalent
- * using the same brand colors (#030303 / #7bf163).
+ * The mobile app's actual mark (Mobile App/moodler/assets/images/
+ * ic_launcher_foreground.png, its configured app icon), not a recreation.
+ * The source logo.svg embeds a large raster and is too heavy to ship on the
+ * web, but this launcher-icon export of the same mark is only ~10KB.
  */
 export function Logo({ size = 64, className }: LogoProps) {
   return (
-    <svg
+    <img
+      src="/logo-mark.png"
+      alt="Moodly"
       width={size}
       height={size}
-      viewBox="0 0 64 64"
-      fill="none"
-      className={cn(className)}
-      role="img"
-      aria-label="Moodly"
-    >
-      <rect width="64" height="64" rx="18" fill="var(--color-ink)" />
-      <circle cx="32" cy="27" r="13" fill="var(--color-accent)" />
-      <path
-        d="M19 43c3-4 8-6 13-6s10 2 13 6"
-        stroke="var(--color-button-text)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
+      className={cn('object-contain', className)}
+      style={{ width: size, height: size }}
+    />
   )
 }
