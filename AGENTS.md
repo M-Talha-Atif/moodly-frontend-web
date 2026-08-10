@@ -84,23 +84,29 @@ logic; the token-attachment and refresh-on-401 interceptors are wired in
 
 Built so far: app shell (router, providers, theme), shared UI kit, the
 session/auth entity, a `ProtectedRoute` wrapper for authenticated-only pages,
-a shared `AppHeader` widget (Home/Explore nav plus sign out) for all
-authenticated pages, and seven modules end to end: **Landing**, **Auth**
+a shared `AppHeader` widget (Home/Explore/Bookings nav plus sign out) for all
+authenticated pages, and eight modules end to end: **Landing**, **Auth**
 (login/signup with role selection), **Onboarding** (chat-style step flow),
 **App Home** (greeting, mood streak, check-in prompt), **Daily Check-in**
 (mood wheel plus optional note, wired to `/mood-log`), **Explore** (search
 plus infinite-scroll "load more" list of experiences), **Experience Detail
 and Booking** (full experience view with emotion/outcome/cultural chips,
-host card, `POST /user/bookings`). All seven were smoke-tested against a real
-local instance of `Backend/ai-moodler-backend`, not just built and assumed to
-work.
+host card, `POST /user/bookings`), **My Bookings** (status filter tabs,
+inline cancel confirmation, wired to `GET/DELETE /user/bookings`). All eight
+were smoke-tested against a real local instance of
+`Backend/ai-moodler-backend`, not just built and assumed to work.
 
 Not yet ported from the old frontend (`Frontend/ai-event-book`), intentionally
-out of scope for this pass: bookings list/community/profile, host
+out of scope for this pass: community, profile, host
 dashboard/experiences/bookings, notifications, insights, settings. When
 picking these up, follow the same layer structure: a `features/<name>` folder
 with `api/model/ui`, theme tokens from `shared/ui`/`theme.css` only, copy in
 `shared/config/strings`.
+
+**Convention note**: use an inline confirm step (see `features/myBookings/
+ui/BookingCard.tsx`) for destructive actions, not `window.confirm()`. The
+native dialog blocks synchronously in a way that doesn't play well with
+React state and is also untestable via DOM-level automation.
 
 **Known backend caveats found during testing** (none committed to the backend
 repo, review before relying on them elsewhere):

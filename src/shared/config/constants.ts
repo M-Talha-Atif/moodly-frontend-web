@@ -7,6 +7,7 @@ export const ROUTES = {
   dailyCheckIn: '/daily-check-in',
   explore: '/explore',
   experienceDetail: '/experience/:id',
+  bookings: '/bookings',
 } as const
 
 export function experienceDetailPath(id: string) {

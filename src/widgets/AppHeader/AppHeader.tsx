@@ -8,6 +8,7 @@ import { useLogout } from '@/features/auth/api/useLogout'
 const navItems = [
   { to: ROUTES.app, label: strings.nav.home },
   { to: ROUTES.explore, label: strings.nav.explore },
+  { to: ROUTES.bookings, label: strings.nav.bookings },
 ]
 
 export function AppHeader() {

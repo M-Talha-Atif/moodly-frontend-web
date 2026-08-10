@@ -100,6 +100,7 @@ export const strings = {
   nav: {
     home: 'Home',
     explore: 'Explore',
+    bookings: 'Bookings',
   },
   explore: {
     title: 'Explore experiences',
@@ -126,5 +127,24 @@ export const strings = {
     alreadyBooked: 'You are booked for this experience',
     bookingSuccess: 'Booking confirmed',
     bookingError: 'Could not complete booking. Please try again.',
+  },
+  myBookings: {
+    title: 'Your bookings',
+    subtitle: 'Everything you have booked, in one place.',
+    filterAll: 'All',
+    filterConfirmed: 'Confirmed',
+    filterCancelled: 'Cancelled',
+    filterWaitlisted: 'Waitlisted',
+    empty: 'No bookings yet',
+    error: 'Could not load your bookings. Please try again.',
+    cancelCta: 'Cancel booking',
+    cancelConfirm: 'Cancel this booking?',
+    cancelConfirmYes: 'Yes, cancel',
+    cancelConfirmNo: 'Keep it',
+    cancelSuccess: 'Booking cancelled',
+    cancelError: 'Could not cancel booking. Please try again.',
+    statusConfirmed: 'Confirmed',
+    statusCancelled: 'Cancelled',
+    statusWaitlisted: 'Waitlisted',
   },
 } as const

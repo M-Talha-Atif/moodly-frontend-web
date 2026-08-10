@@ -1,2 +1,9 @@
 export { useCreateBooking } from './api/useCreateBooking'
-export type { BookingResponse } from './api/bookingApi'
+export { useBookings, useBooking, useBookingStats, useCancelBooking } from './api/useBookings'
+export type {
+  BookingSummary,
+  BookingDetail,
+  BookingStats,
+  BookingStatus,
+  BookingListFilters,
+} from './api/bookingApi'
