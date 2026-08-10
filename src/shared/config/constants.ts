@@ -8,6 +8,7 @@ export const ROUTES = {
   explore: '/explore',
   experienceDetail: '/experience/:id',
   bookings: '/bookings',
+  profile: '/profile',
 } as const
 
 export function experienceDetailPath(id: string) {

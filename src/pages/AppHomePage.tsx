@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 import { Button, Card, Container, Text } from '@/shared/ui'
 import { strings } from '@/shared/config/strings/en'
 import { ROUTES } from '@/shared/config/constants'
-import { useCurrentUser } from '@/entities/user'
+import { useProfile } from '@/entities/user'
 import { useTodayMoodLog, useMoodStreak } from '@/features/dailyCheckIn'
 import { AppHeader } from '@/widgets/AppHeader'
 
 export function AppHomePage() {
-  const { data: user } = useCurrentUser()
+  const { data: profile } = useProfile()
   const { data: todayLog, isLoading: isTodayLoading } = useTodayMoodLog()
   const { data: streak } = useMoodStreak()
 
@@ -18,7 +18,7 @@ export function AppHomePage() {
       <Container className="flex flex-col gap-6 py-10">
         <Text variant="display" className="text-3xl">
           {strings.home.greeting}
-          {user?.name ? `, ${user.name}` : ''}
+          {profile?.name ? `, ${profile.name}` : ''}
         </Text>
 
         <div className="grid gap-5 sm:grid-cols-2">

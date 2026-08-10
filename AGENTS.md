@@ -84,24 +84,34 @@ logic; the token-attachment and refresh-on-401 interceptors are wired in
 
 Built so far: app shell (router, providers, theme), shared UI kit, the
 session/auth entity, a `ProtectedRoute` wrapper for authenticated-only pages,
-a shared `AppHeader` widget (Home/Explore/Bookings nav plus sign out) for all
-authenticated pages, and eight modules end to end: **Landing**, **Auth**
-(login/signup with role selection), **Onboarding** (chat-style step flow),
-**App Home** (greeting, mood streak, check-in prompt), **Daily Check-in**
-(mood wheel plus optional note, wired to `/mood-log`), **Explore** (search
-plus infinite-scroll "load more" list of experiences), **Experience Detail
-and Booking** (full experience view with emotion/outcome/cultural chips,
-host card, `POST /user/bookings`), **My Bookings** (status filter tabs,
-inline cancel confirmation, wired to `GET/DELETE /user/bookings`). All eight
-were smoke-tested against a real local instance of
-`Backend/ai-moodler-backend`, not just built and assumed to work.
+a shared `AppHeader` widget (Home/Explore/Bookings/Profile nav plus sign out)
+for all authenticated pages, and nine modules end to end: **Landing**,
+**Auth** (login/signup with role selection), **Onboarding** (chat-style step
+flow), **App Home** (greeting, mood streak, check-in prompt), **Daily
+Check-in** (mood wheel plus optional note, wired to `/mood-log`),
+**Explore** (search plus infinite-scroll "load more" list of experiences),
+**Experience Detail and Booking** (full experience view with
+emotion/outcome/cultural chips, host card, `POST /user/bookings`), **My
+Bookings** (status filter tabs, inline cancel confirmation, wired to
+`GET/DELETE /user/bookings`), **Profile** (avatar upload, edit name, change
+password with inline old-password-error handling, wired to
+`GET/PATCH /profile` and `PATCH /profile/password`). All nine were
+smoke-tested against a real local instance of `Backend/ai-moodler-backend`,
+not just built and assumed to work.
 
 Not yet ported from the old frontend (`Frontend/ai-event-book`), intentionally
-out of scope for this pass: community, profile, host
-dashboard/experiences/bookings, notifications, insights, settings. When
-picking these up, follow the same layer structure: a `features/<name>` folder
-with `api/model/ui`, theme tokens from `shared/ui`/`theme.css` only, copy in
-`shared/config/strings`.
+out of scope for this pass: community, host dashboard/experiences/bookings,
+notifications, insights, settings. When picking these up, follow the same
+layer structure: a `features/<name>` folder with `api/model/ui`, theme
+tokens from `shared/ui`/`theme.css` only, copy in `shared/config/strings`.
+
+**Bug fixed while building Profile**: `entities/user`'s `useCurrentUser`
+called `GET /auth/me`, which returns the raw JWT payload
+(`{sub, email, role, iat, exp}`), not a user profile, so `user?.name` on
+App Home was silently always empty. Replaced with `useProfile()` backed by
+`GET /profile` (returns `{name, avatarUrl, email, accountStatus}`), which is
+also what the Profile module itself uses. `GET /auth/me` is not used
+anywhere in this codebase anymore.
 
 **Convention note**: use an inline confirm step (see `features/myBookings/
 ui/BookingCard.tsx`) for destructive actions, not `window.confirm()`. The
@@ -130,6 +140,16 @@ repo, review before relying on them elsewhere):
   class declares (`ExperienceService.findOneWithBooking` hand-builds the
   response object and doesn't match the DTO's field names). The frontend type
   is built off the verified runtime shape, not the DTO class.
+- `GET /profile` and `GET /profile/image` have no response DTO class at all,
+  they return inline object literals (`profile.service.ts`), so their shape
+  is hand-declared on the frontend (`UserProfile` in `entities/user`) rather
+  than typed against anything on the backend. `PATCH /profile` and
+  `PATCH /profile/password` return `ResultDto.okWithMessage()` on success,
+  meaning no `data` field at all, not even an empty one, so `unwrap()` (which
+  requires `data`) would incorrectly throw on a real success. Added
+  `unwrapMessage()` in `shared/api/apiClient.ts` for this response shape;
+  reach for it instead of `unwrap()` whenever a backend endpoint's success
+  path is message-only.
 
 The old frontend's mood-reactive theme switching (`.happy/.sad/.angry/.neutral`)
 was deliberately not carried over here, since the mobile app (the source of

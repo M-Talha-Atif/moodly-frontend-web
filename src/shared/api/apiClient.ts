@@ -20,3 +20,16 @@ export function unwrap<T>(result: ApiResult<T>): T {
   }
   return result.data
 }
+
+/**
+ * Some endpoints (e.g. PATCH /profile, PATCH /profile/password) respond via
+ * ResultDto.okWithMessage(), which carries no `data` field at all, only a
+ * message. Use this instead of unwrap() for those so a legitimately
+ * data-less success isn't treated as a failure.
+ */
+export function unwrapMessage(result: ApiResult<unknown>): string {
+  if (!result.success) {
+    throw new ApiError(result.message ?? 'Request failed', result.statusCode, result.errorType)
+  }
+  return result.message ?? ''
+}

@@ -28,6 +28,9 @@ const ExperienceDetailPage = lazy(() =>
 const MyBookingsPage = lazy(() =>
   import('@/pages/MyBookingsPage').then((m) => ({ default: m.MyBookingsPage })),
 )
+const ProfilePage = lazy(() =>
+  import('@/pages/ProfilePage').then((m) => ({ default: m.ProfilePage })),
+)
 
 export function AppRouter() {
   return (
@@ -82,6 +85,14 @@ export function AppRouter() {
             element={
               <ProtectedRoute>
                 <MyBookingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.profile}
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
               </ProtectedRoute>
             }
           />

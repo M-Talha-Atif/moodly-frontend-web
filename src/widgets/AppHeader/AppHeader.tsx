@@ -9,6 +9,7 @@ const navItems = [
   { to: ROUTES.app, label: strings.nav.home },
   { to: ROUTES.explore, label: strings.nav.explore },
   { to: ROUTES.bookings, label: strings.nav.bookings },
+  { to: ROUTES.profile, label: strings.nav.profile },
 ]
 
 export function AppHeader() {
